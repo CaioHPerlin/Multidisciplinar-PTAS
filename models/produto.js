@@ -19,7 +19,7 @@ class Produto {
       const values = [data.titulo, data.dataCadastro, data.preco, data.descricao, data.imagem];
       return await connect.query(sql, values);
     } catch (error) {
-      console.error('Erro em insert:', error);
+      console.error('Erro ao inserir novo produto:', error);
       throw error;
     }
   }
@@ -27,10 +27,10 @@ class Produto {
   static async selectOne(id) {
     try {
       const connect = await db.connect();
-      const sql = "SELECT * FROM pessoas WHERE id=$1";
+      const sql = "SELECT * FROM produto WHERE id=$1";
       return await connect.query(sql,[id]);
     } catch (error) {
-      console.error('Erro em select:', error);
+      console.error('Erro ao recuperar registro por id:', error);
       throw error;
     }
   }
