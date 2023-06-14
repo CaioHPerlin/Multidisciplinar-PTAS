@@ -35,25 +35,25 @@ class Produto {
     }
   }
 
-  static async update(id, data) {
+  static async delete(id) {
     try {
       const connect = await db.connect();
-      const sql = "";
-      const values = [data.nome, data.idade, data.uf, id];
-      return await connect.query(sql, values);
+      const sql = "DELETE FROM produto WHERE id=$1";
+      return await connect.query(sql, [id]);
     } catch (error) {
-      console.error('Erro em update:', error);
+      console.error('Erro ao deletar produto:', error);
       throw error;
     }
   }
 
-  static async delete(id) {
+  static async update(id, data) {
     try {
       const connect = await db.connect();
-      const sql = "DELETE FROM pessoas WHERE id=$1";
-      return await connect.query(sql, [id]);
+      const sql = "UPDATE produto SET titulo=$1, data_cadastro=$2, preco=$3, descricao=$4, imagem=$5 WHERE id=$6";
+      const values = [data.titulo, data.dataCadastro, data.preco, data.descricao, data.imagem, id];
+      return await connect.query(sql, values);
     } catch (error) {
-      console.error('Erro em delete:', error);
+      console.error('Erro ao atualizar produto:', error);
       throw error;
     }
   }

@@ -42,18 +42,23 @@ app.post('/detalhes', async function(req,res){
   }
 })
 
-/*
-app.delete('/pessoas', async function(req, res){
+app.delete('/detalhes/deletar', async function(req, res){
   try {
-    console.log(req.body.id)
-    var pessoa = await Pessoa.delete(req.body.id);
-    res.json(pessoa.rows);
+    var produto = await Produto.delete(2);
+    res.json(produto.rows);
   } catch (error) {
-    console.error('Erro ao atualizar pessoa:', error);
-    res.status(500).json({ error: 'Ocorreu um erro ao atualizar pessoa' });
+    console.error('Erro ao deletar produto:', error);
+    res.status(500).json({ error: 'Ocorreu um erro ao deletar produto' });
   }
-});*/
+});
 
+/*
+app.put('/detalhes/atualizar', async function(req, res){
+  try{
+    var produto = await Produto.update(req.body.id, req.body)
+  }
+})
+*/
 
 app.listen(3001, function() {
   console.log(`app de Exemplo escutando na porta ${3001}.`)
