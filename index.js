@@ -23,6 +23,16 @@ app.get('/produtos', async function(req, res){
 
 app.post('/produtos', async function(req,res){
   try{
+    var produto = await Produto.selectOne(req.body.id);
+    res.json(produto.rows[0])
+  }catch(error){
+    console.error('Erro ao selecionar produto:', error);
+    res.status(500).json({ error: 'Ocorreu um erro ao selecionar produto' });
+  }
+})
+
+app.post('/produto', async function(req,res){
+  try{
     var produto = req.body
     var produto = await Produto.insert(produto);
     res.json(produto.rows)
@@ -32,19 +42,9 @@ app.post('/produtos', async function(req,res){
   }
 })
 
-app.post('/detalhes', async function(req,res){
-  try{
-    var produto = await Produto.selectOne(req.body.id);
-    res.json(produto.rows[0])
-  }catch(error){
-    console.error('Erro ao selecionar produto:', error);
-    res.status(500).json({ error: 'Ocorreu um erro ao selecionar produto' });
-  }
-})
-
-app.delete('/detalhes/deletar', async function(req, res){
+app.delete('/produtos', async function(req, res){
   try {
-    var produto = await Produto.delete(2);
+    var produto = await Produto.delete(req.body.id);
     res.json(produto.rows);
   } catch (error) {
     console.error('Erro ao deletar produto:', error);
@@ -52,13 +52,15 @@ app.delete('/detalhes/deletar', async function(req, res){
   }
 });
 
-/*
-app.put('/detalhes/atualizar', async function(req, res){
-  try{
-    var produto = await Produto.update(req.body.id, req.body)
+app.put('/produtos', async function(req, res){
+  try {
+    var produto = await Produto.update(req.body.id, req.body);
+    res.json(produto.rows);
+  } catch (error) {
+    console.error('Erro ao atualizar produto:', error);
+    res.status(500).json({ error: 'Ocorreu um erro ao atualizar produto' });
   }
-})
-*/
+});
 
 app.listen(3001, function() {
   console.log(`app de Exemplo escutando na porta ${3001}.`)
