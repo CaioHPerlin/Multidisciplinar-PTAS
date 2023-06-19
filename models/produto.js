@@ -4,7 +4,7 @@ class Produto {
   static async select() {
     try {
       const connect = await db.connect();
-      const sql = "SELECT * FROM produto"
+      const sql = "SELECT * FROM produto ORDER BY id DESC"
       return await connect.query(sql);
     } catch (error) {
       console.error('Erro ao selecionar produtos:', error);
